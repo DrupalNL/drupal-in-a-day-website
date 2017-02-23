@@ -17,17 +17,17 @@ First you need to [install composer](https://getcomposer.org/doc/00-intro.md#ins
 You might need to replace `composer` with `php composer.phar` (or similar) 
 for your setup.
 
-After that you can create the project:
+After that you can install the project run composer install from the webroot directory:
 
 ```
-composer create-project drupal-composer/drupal-project:8.x-dev some-dir --stability dev --no-interaction
+composer install
 ```
 
 With `composer require ...` you can download new dependencies to your 
 installation.
 
 ```
-cd some-dir
+cd web
 composer require drupal/devel:~1.0
 ```
 
