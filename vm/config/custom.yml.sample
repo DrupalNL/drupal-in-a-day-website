@@ -4,6 +4,9 @@ vagrant:
     - host: "/Users/username/Sites/drupal-training-day/web"
       guest: /var/www/drupal-training-day/web
       type: nfs
+    - host: "/Users/username/Sites/drupal-training-day/vendor"
+      guest: /var/www/drupal-training-day/vendor
+      type: nfs
     - host: "/Users/username/.drush/aliases"
       guest: /etc/drush
 ansible:

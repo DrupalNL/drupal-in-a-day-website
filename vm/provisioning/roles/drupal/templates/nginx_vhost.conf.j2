@@ -16,7 +16,7 @@ server {
     }
 
     location ~* \.(css|js|jpg|jpeg|gif|png|ico) {
-        root /var/www/{{ item.name }}/htdocs/;
+        root /var/www/{{ item.name }}/web/;
         expires max;
         try_files $uri $uri/ @drupal;
     }
@@ -82,7 +82,7 @@ server {
 #    }
 
 #    location ~* \.(css|js|jpg|jpeg|gif|png|ico) {
-#        root /var/www/{{ item.name }}/htdocs/;
+#        root /var/www/{{ item.name }}/web/;
 #        expires max;
 #        try_files $uri $uri/ @drupal;
 #    }

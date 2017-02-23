@@ -179,7 +179,7 @@
 
 - name: "Create default docroot."
   file:
-    path=/var/www/default/htdocs
+    path=/var/www/default/web
     state=directory
     owner={{ apache_user }}
     group={{ apache_user_group }}

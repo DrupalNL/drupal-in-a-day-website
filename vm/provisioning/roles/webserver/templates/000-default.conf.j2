@@ -1,8 +1,8 @@
 <VirtualHost *:{{ apache_port }}>
   ServerAdmin beheer@limoengroen.nl
-  DocumentRoot /var/www/default/htdocs
+  DocumentRoot /var/www/default/web
 
-  <Directory "/var/www/default/htdocs">
+  <Directory "/var/www/default/web">
     Options None
     AllowOverride None
     Require all denied
