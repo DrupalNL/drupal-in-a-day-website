@@ -1,0 +1,5 @@
+---
+# file: host_vars/default/config.yml
+
+ansible_ssh_host: "{{ ssh_host }}"
+ansible_ssh_user: "{{ ssh_user }}"

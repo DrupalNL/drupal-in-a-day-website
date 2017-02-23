@@ -1,0 +1,10 @@
+---
+vagrant:
+  synced_folders:
+    - host: "/Users/username/Sites/drupal-training-day/web"
+      guest: /var/www/drupal-training-day/web
+      type: nfs
+    - host: "/Users/username/.drush/aliases"
+      guest: /etc/drush
+ansible:
+  reroute_email: username@limoengroen.nl

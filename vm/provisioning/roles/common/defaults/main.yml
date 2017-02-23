@@ -1,0 +1,17 @@
+---
+# file: roles/common/defults/main.yml
+
+filebeat_install: false
+fail2ban_install: false
+postfix_install: false
+iptables_install: false
+
+admin_keys:
+  - "{{ lookup('file', '../public_keys/baris.pub') }}"
+  - "{{ lookup('file', '../public_keys/heine.pub') }}"
+  - "{{ lookup('file', '../public_keys/martijn.pub') }}"
+
+removed_admin_keys:
+  - "{{ lookup('file', '../removed_keys/david.pub') }}"
+
+fail2ban_ignoreip: 127.0.0.1/8 213.127.154.125

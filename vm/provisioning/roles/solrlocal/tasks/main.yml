@@ -1,0 +1,90 @@
+---
+# file: roles/solr_local/tasks/main.yml
+
+# Solr block.
+- block:
+  - name: "Install java package."
+    apt:
+      pkg=default-jre
+      state=installed
+
+  - name: "Download and extract Solr."
+    unarchive:
+      copy=no
+      dest=/usr/local/share
+      src=http://archive.apache.org/dist/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz
+      owner=vagrant
+      group=vagrant
+    args:
+      creates: /usr/local/share/solr-{{ solr_version }}/example/start.jar
+
+  - name: "Set Solr directory ownership to `vagrant`."
+    file:
+      path=/usr/local/share/solr-{{ solr_version }}
+      owner=vagrant
+      group=vagrant
+      recurse=true
+
+  - name: "Create Solr multicore environment."
+    become: false
+    shell: cp -R example drupal && rm -rf drupal/multicore/core*
+    args:
+      chdir: /usr/local/share/solr-{{ solr_version }}
+      creates: /usr/local/share/solr-{{ solr_version }}/drupal/start.jar
+
+  - name: "Create Solr multicores directories."
+    become: false
+    file:
+      path=/usr/local/share/solr-{{ solr_version }}/drupal/multicore/{{ item.name }}/conf
+      state=directory
+      owner=vagrant
+      group=vagrant
+    with_items: "{{ sites }}"
+    when: item.solr_use_core_config
+
+  - name: "Copy Solr cores configuration."
+    become: false
+    shell: cp -R {{ item.docroot }}/{{item.solr_config_dir}}/* /usr/local/share/solr-{{ solr_version }}/drupal/multicore/{{ item.name }}/conf
+    args:
+      creates: /usr/local/share/solr-{{ solr_version }}/drupal/multicore/{{ item.name }}/conf/schema.xml
+    with_items: "{{ sites }}"
+    when: not item.solr_use_core_config and item.solr_config_dir != ""
+
+  - name: "Configure Solr."
+    become: false
+    template:
+      src=solr.xml.j2
+      dest=/usr/local/share/solr-{{ solr_version }}/drupal/multicore/solr.xml
+      owner=vagrant
+      group=vagrant
+      mode=0644
+    notify: restart_jetty
+
+  - name: "Create Solr log directory."
+    file:
+      path=/var/log/solr
+      state=directory
+      owner=vagrant
+      group=vagrant
+
+  - name: "Create Jetty service script."
+    copy:
+      src=jetty/jetty.sh
+      dest=/etc/init.d/jetty
+      owner=root
+      group=root
+      mode=0655
+
+  - name: "Create Jetty service settings."
+    template:
+      src=jetty_settings.j2
+      dest=/etc/default/jetty
+      owner=root
+      group=root
+      mode=0644
+
+  - name: "Enable Jetty service."
+    command: /etc/init.d/jetty start
+    notify: restart_jetty
+
+  when: solr_install

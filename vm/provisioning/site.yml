@@ -1,0 +1,6 @@
+---
+# file: site.yml
+
+- include: drupal.yml
+- include: solrlocal.yml
+- include: eslocal.yml

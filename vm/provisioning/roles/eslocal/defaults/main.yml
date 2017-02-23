@@ -1,0 +1,5 @@
+---
+# file: roles/es_local/defaults/main.yml
+
+es_install: false
+es_version: 1.7

@@ -1,0 +1,32 @@
+---
+# file: roles/common/handlers/main.yml
+
+- name: restart_ssh
+  service:
+    name=ssh
+    state=restarted
+
+- name: restart_fail2ban
+  service:
+    name=fail2ban
+    state=restarted
+
+- name: restart_postfix
+  service:
+    name=postfix
+    state=restarted
+
+- name: restart_iptables_persistent
+  service:
+    name=netfilter-persistent
+    state=restarted
+
+- name: restart_filebeat
+  service:
+    name=filebeat
+    state=restarted
+
+- name: restart_rsyslog
+  service:
+    name=rsyslog
+    state=restarted

@@ -1,0 +1,331 @@
+---
+# file: roles/drupal/tasks/main.yml
+
+- name: "Download Composer."
+  get_url:
+    url=https://getcomposer.org/installer
+    dest=/tmp/composer.php
+
+- name: "Install Composer."
+  shell: php /tmp/composer.php --install-dir=/usr/local/bin --filename=composer
+  args:
+    creates: /usr/local/bin/composer
+
+- name: "Update Composer."
+  shell: composer self-update
+  tags:
+    - drush_update
+
+- name: "Remove previously installed drush."
+  file:
+    path=/usr/local/share/drush
+    state=absent
+  tags:
+    - drush_update
+
+- name: "Create drush folder."
+  file:
+    path=/usr/local/share/drush
+    state=directory
+    owner=root
+    group=root
+  tags:
+    - drush_update
+
+- name: "Init composer project."
+  shell: composer init --require=drush/drush:{{ drush_version }} -n
+  args:
+    chdir: /usr/local/share/drush
+    creates: /usr/local/share/drush/drush
+  tags:
+    - drush_update
+
+- name: "Configure composer path."
+  shell: composer config bin-dir /usr/local/bin
+  args:
+    chdir: /usr/local/share/drush
+  tags:
+    - drush_update
+
+- name: "Install drush."
+  shell: composer install
+  args:
+    chdir: /usr/local/share/drush
+  tags:
+    - drush_update
+
+- name: "Initial Drush run."
+  command: /usr/local/bin/drush
+  tags:
+    - drush_update
+
+- name: "Install Drush registry_rebuild."
+  command: /usr/local/share/drush/drush dl registry_rebuild --destination=/usr/local/share/drush/commands
+  args:
+    creates: /usr/local/share/drush/commands/registry_rebuild/registry_rebuild.php
+  notify: drush_cc_drush
+  tags:
+    - drush_update
+  when: drush_version == "7.*"
+
+- name: "Generate strong password"
+  shell: mkpasswd --method=sha-512 "{{ lookup('password', '/tmp/credentials/drupalusers/userpassword length=16 chars=ascii_letters,digits') }}"
+  register: drupal_strong_password
+
+- name: "Create project users."
+  user:
+    name={{ item.name }}
+    group={{ apache_user_group }}
+    password="{{ drupal_strong_password["stdout"] }}"
+    state=present
+    shell=/bin/bash
+  with_items: "{{ sites }}"
+
+- name: "Add SSH keys for the project users."
+  authorized_key:
+    user={{ item[0].name }}
+    key="{{ item[1] }}"
+    state=present
+  with_nested:
+    - "{{ sites }}"
+    - "{{ keys }}"
+  tags:
+    - update_keys
+
+#- name: "Remove SSH keys for the project users."
+#  authorized_key:
+#    user={{ item[0].name }}
+#    key="{{ item[1] }}"
+#    state=absent
+#  with_nested:
+#    - "{{ sites }}"
+#    - "{{ removed_keys }}"
+#  tags:
+#    - update_keys
+
+#- name: "Create project docroots."
+#  file:
+#    path={{ item.docroot }}
+#    state=directory
+#    owner={{ item.name }}
+#    group={{ apache_user_group }}
+#  with_items: "{{ sites }}"
+
+# Apache-only install.
+- block:
+  - name: "Configure vhost(s) without ACL."
+    template:
+      src=apache_vhost.conf.j2
+      dest=/etc/apache2/sites-available/{{ item.name }}.conf
+      owner=root
+      group=root
+      mode=0644
+    with_items: "{{ sites }}"
+    notify: restart_apache
+    when: item.reprovision and not item.acl
+
+  - name: "Configure vhost(s) with ACLs."
+    template:
+      src=apache_vhost_acl.conf.j2
+      dest=/etc/apache2/sites-available/{{ item.name }}.conf
+      owner=root
+      group=root
+      mode=0644
+    with_items: "{{ sites }}"
+    notify: restart_apache
+    when: item.reprovision and item.acl
+
+  - name: "Enable vhost(s)."
+    command: a2ensite {{ item.name }}.conf
+    args:
+      creates: /etc/apache2/sites-enabled/{{ item.name }}.conf
+    with_items: "{{ sites }}"
+    notify: restart_apache
+    when: item.reprovision
+
+#  - name: "Configure alias vhost(s)."
+#    template:
+#      src=apache_vhost_redirect.conf.j2
+#      dest=/etc/apache2/sites-available/{{ item.1 }}-redirect.conf
+#      owner=root
+#      group=root
+#      mode=0644
+#    with_subelements:
+#      - "{{ sites }}"
+#      - "{{ server_aliases }}"
+#    notify: restart_apache
+#    when: item.0.reprovision and not nginx_install
+
+#  - name: "Enable alias vhost(s)."
+#    command: a2ensite {{ item.1 }}-redirect.conf
+#    args:
+#      creates: /etc/apache2/sites-enabled/{{ item.1 }}-redirect.conf
+#    with_subelements:
+#      - "{{ sites }}"
+#      - "{{ server_aliases }}"
+#    notify: restart_apache
+#    when: item.0.reprovision
+
+  when: not nginx_install
+
+# Nginx block
+- block:
+  - name: "Configure Nginx vhost(s)s."
+    template:
+      src=nginx_vhost.conf.j2
+      dest=/etc/nginx/sites-available/{{ item.name }}.conf
+      owner=root
+      group=root
+      mode=0644
+    with_items: "{{ sites }}"
+    notify: restart_nginx
+    when: item.reprovision
+
+  - name: "Enable Nginx vhost(s)."
+    file:
+      state=link
+      src=/etc/nginx/sites-available/{{ item.name }}.conf
+      dest=/etc/nginx/sites-enabled/{{ item.name }}.conf
+    with_items: "{{ sites }}"
+    notify: restart_nginx
+    when: item.reprovision
+
+  - name: "Configure Apache vhost(s)"
+    template:
+      src=apache_vhost_nginx.conf.j2
+      dest=/etc/apache2/sites-available/{{ item.name }}.conf
+      owner=root
+      group=root
+      mode=0644
+    with_items: "{{ sites }}"
+    notify: restart_apache
+    when: item.reprovision
+
+  - name: "Enable vhost(s)."
+    command: a2ensite {{ item.name }}.conf
+    args:
+      creates: /etc/apache2/sites-enabled/{{ item.name }}.conf
+    with_items: "{{ sites }}"
+    notify: restart_apache
+    when: item.reprovision
+
+  when: nginx_install
+
+- name: "Install Python passlib package."
+  apt:
+    pkg=python-passlib
+    state=installed
+  when: item.acl
+  with_items: "{{ sites }}"
+
+- name: "Create .htpasswd file."
+  htpasswd:
+    name=limoengroen
+    password={{ acl_password }}
+    path={{ item.docroot }}/../.htpasswd
+    owner=root
+    group={{ apache_user_group }}
+    mode=0640
+    state=present
+  with_items: "{{ sites }}"
+  when: item.acl
+  notify: restart_apache
+
+- name: "Create private files directory."
+  file:
+    path={{ item.docroot }}/../private
+    state=directory
+    owner={{ apache_user }}
+    group={{ apache_user_group }}
+    mode=0775
+  with_items: "{{ sites }}"
+
+- name: "Create Drupal settings directory."
+  file:
+    path={{ item.docroot }}/../settings
+    state=directory
+    owner={{ apache_user }}
+    group={{ apache_user_group }}
+  with_items: "{{ sites }}"
+
+#- name: "Create Drupal 8 config/sync directory."
+#  file:
+#    path={{ item.docroot }}/../config/sync
+#    state=directory
+#    owner={{ item.name }}
+#    group={{ apache_user_group }}
+#    mode=0775
+#  with_items: "{{ sites }}"
+#  when: item.drupal_version == 8
+
+#MySQL local block
+- block:
+  - name: "Create MysSQL databases."
+    mysql_db:
+      name={{ item.db_name }}
+      state=present
+    with_items: "{{ sites }}"
+
+  - name: "Create MySQL users."
+    mysql_user:
+      name={{ item.db_name }}
+      password="{{ lookup('password', '/tmp/credentials/' + item.db_name + '/mysqlpassword length=16 chars=ascii_letters,digits') }}"
+      priv={{ item.db_name }}.*:ALL,GRANT
+      state=present
+    with_items: "{{ sites }}"
+
+  - name: "Configure database settings."
+    template:
+      src=db_settings_d{{ item.drupal_version }}.php.j2
+      dest={{ item.docroot }}/../settings/db_settings.php
+      owner={{ apache_user }}
+      group={{ apache_user_group }}
+      mode=0644
+    with_items: "{{ sites }}"
+
+  when: mysql_local
+
+#MySQL remote block
+- block:
+  - name: "Configure database settings."
+    template:
+      src=db_settings_d{{ item.drupal_version }}_remote.php.j2
+      dest={{ item.docroot }}/../settings/db_settings.php
+      owner={{ apache_user }}
+      group={{ apache_user_group }}
+      mode=0644
+    with_items: "{{ sites }}"
+
+  when: not mysql_local
+
+- name: "Create cron jobs."
+  cron:
+    name="cron_{{ item.name }}"
+    user={{ apache_user }}
+    minute={{ item.cron_minute }}
+    job="COLUMNS=72 /usr/local/bin/drush --root={{ item.docroot }} --uri={{ item.server_name }} --quiet {{ item.drush_cron_command }}"
+    state=present
+  with_items: "{{ sites }}"
+  when: item.cron_configure
+
+# Filebeat block.
+- block:
+  - name: "Add drupal logs to rsyslog configuration."
+    lineinfile:
+      dest=/etc/rsyslog.d/30-drupal.conf
+      state=present
+      regexp="drupal_{{ item.name }}"
+      line="if $programname == 'drupal_{{ item.name }}' then /var/log/drupal/drupal_{{ item.name }}.log"
+    with_items: "{{ sites  }}"
+    notify: restart_rsyslog
+    when: item.logstash
+
+  - name: "Do not write drupal logs to rsyslog configuration."
+    lineinfile:
+      dest=/etc/rsyslog.d/30-drupal.conf
+      state=present
+      regexp="& ~"
+      line="& ~"
+    notify: restart_rsyslog
+
+  when: filebeat_install

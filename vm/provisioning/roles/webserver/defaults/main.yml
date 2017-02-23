@@ -1,0 +1,47 @@
+---
+# file: roles/webserver/defaults/main.yml
+
+apache_user: www-data
+apache_user_group: www-data
+apache_port: 80
+
+nginx_install: false
+nginx_worker_processes: auto
+nginx_worker_rlimit_nofile: 100000
+nginx_worker_connections: 1024
+
+varnish_install: false
+varnish_drupal_version: 8
+varnish_port: 6081
+varnish_malloc: 128M
+varnish_thread_pools: 3
+varnish_thread_pool_min: 100
+varnish_thread_pool_max: 5000
+
+php_upload_max_filesize: 32M
+php_post_max_size: 32M
+php_memory_limit: 256M
+php_max_execution_time: 300
+php_error_reporting: "E_ALL & ~E_DEPRECATED & ~E_STRICT"
+php_display_errors: Off
+php_realpath_cache_size: 1M
+php_realpath_cache_ttl: 300
+php_date_timezone: Europe/Amsterdam
+php_max_input_vars: 1000
+php_modules: []
+
+mysql_local: true
+
+opcache_enabled: 1
+opcache_memory_consumption: 256M
+opcache_revalidate_freq: 60
+opcache_save_comments: 1
+
+memcache_install: true
+memcached_memory: 256
+
+xdebug_install: true
+xdebug_max_nesting_level: 256
+
+tika_install: false
+tika_version: 1.13

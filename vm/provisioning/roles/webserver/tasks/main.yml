@@ -1,0 +1,274 @@
+---
+# file: roles/webserver/tasks/main.yml
+
+# Nginx block.
+- block:
+  - name: "Install Nginx packages."
+    apt:
+      pkg=nginx
+      state=installed
+
+  - name: "Configure Nginx settings."
+    template:
+      src=nginx.conf.j2
+      dest=/etc/nginx/nginx.conf
+      owner=root
+      group=root
+      mode=0644
+    notify: restart_nginx
+
+  - name: "Disable default vhost."
+    file:
+      state: absent
+      path: /etc/nginx/sites-enabled/default
+    notify: restart_nginx
+
+  when: nginx_install
+
+# Varnish block.
+- block:
+  - name: "Install Varnish."
+    apt:
+      pkg="varnish"
+      state=installed
+
+  - name: "Replace Varnish configuration."
+    copy:
+      src=varnish/default_d{{ varnish_drupal_version }}.vcl
+      dest=/etc/varnish/default.vcl
+      owner=root
+      group=root
+      mode=0644
+    notify: restart_varnish
+
+  - name: "Configure Varnish startup settings."
+    template:
+      src=varnish.j2
+      dest=/etc/default/varnish
+      owner=root
+      group=root
+      mode=0644
+    notify: restart_varnish
+
+  when: varnish_install
+
+- name: "Install Apache and PHP packages."
+  apt:
+    pkg={{ item }}
+    state=installed
+  with_items:
+    - apache2
+    - libapache2-mod-fastcgi
+    - php-fpm
+    - php-xml
+    - php-gd
+    - php-curl
+    - php7.0-zip
+    - php-mysql
+
+- name: "Disable non-required Apache modules."
+  apache2_module:
+    name={{ item }}
+    state=absent
+    force=yes
+  with_items:
+    - autoindex
+    - negotiation
+    - status
+  notify: restart_apache
+
+- name: "Enable required Apache modules."
+  apache2_module:
+    name={{ item }}
+    state=present
+  with_items:
+    - actions
+    - headers
+    - rewrite
+  notify: restart_apache
+
+- name: "Enable additional PHP modules."
+  command: /usr/sbin/phpenmod {{ item }}
+  args:
+    creates: /etc/php/7.0/fpm/conf.d/20-{{ item }}.ini
+  with_items: "{{ php_modules }}"
+  notify: restart_php-fpm
+
+- name: "Set default hostname."
+  lineinfile:
+    dest=/etc/apache2/apache2.conf
+    state=present
+    regexp='^ServerName localhost'
+    line='ServerName localhost'
+  notify: restart_apache
+
+- name: "Increase Apache security."
+  lineinfile:
+    dest=/etc/apache2/conf-available/security.conf
+    state=present
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+  with_items:
+    - { regexp: '^ServerTokens', line: 'ServerTokens Prod' }
+    - { regexp: '^ServerSignature', line: 'ServerSignature Off' }
+    - { regexp: '^TraceEnable', line: 'TraceEnable Off' }
+  notify: restart_apache
+
+- name: "Set Apache port."
+  lineinfile:
+    dest=/etc/apache2/ports.conf
+    state=present
+    regexp='^Listen 80'
+    line='Listen {{ apache_port }}'
+  notify: restart_apache
+
+- name: "Set umask to set correct file permissions when Apache writes files."
+  lineinfile:
+    dest=/etc/apache2/envvars
+    state=present
+    regexp='^umask'
+    line='umask 002'
+  notify: restart_apache
+
+- name: "Configure PHP settings."
+  lineinfile:
+    dest=/etc/php/7.0/fpm/php.ini
+    state=present
+    regexp="{{ item.regexp }}"
+    line="{{ item.line }}"
+  with_items:
+   - { regexp: '^expose_php', line: 'expose_php = Off' }
+   - { regexp: '^upload_max_filesize', line: 'upload_max_filesize = {{ php_upload_max_filesize }}' }
+   - { regexp: '^post_max_size', line: 'post_max_size = {{ php_post_max_size }}' }
+   - { regexp: '^memory_limit', line: 'memory_limit = {{ php_memory_limit }}' }
+   - { regexp: '^max_execution_time', line: 'max_execution_time = {{ php_max_execution_time }}'}
+   - { regexp: '^error_reporting', line: 'error_reporting = {{ php_error_reporting }}'}
+   - { regexp: '^display_errors', line: 'display_errors = {{ php_display_errors }}'}
+   - { regexp: '^realpath_cache_size', line: 'realpath_cache_size = {{ php_realpath_cache_size }}'}
+   - { regexp: '^realpath_cache_ttl', line: 'realpath_cache_ttl = {{ php_realpath_cache_ttl }}'}
+   - { regexp: '^max_input_vars', line: 'max_input_vars = {{ php_max_input_vars }}'}
+  notify: restart_apache
+
+- name: "Set PHP date.timezone configuration value."
+  lineinfile:
+    dest={{ item.dest }}
+    state=present
+    line='date.timezone = {{ php_date_timezone }}'
+  with_items:
+    - { dest: '/etc/php/7.0/fpm/php.ini' }
+    - { dest: '/etc/php/7.0/cli/php.ini' }
+  notify: restart_php-fpm
+
+- name: "Configure OPcache."
+  template:
+    src=opcache.ini.j2
+    dest=/etc/php/7.0/mods-available/opcache.ini
+    owner=root
+    group=root
+    mode=0644
+  notify: restart_php-fpm
+
+- name: "Replace fastcgi configuration."
+  copy:
+    src=fastcgi.conf
+    dest=/etc/apache2/mods-available
+    owner=root
+    group=root
+    mode=0644
+  notify: restart_apache
+
+- name: "Create default docroot."
+  file:
+    path=/var/www/default/htdocs
+    state=directory
+    owner={{ apache_user }}
+    group={{ apache_user_group }}
+  notify: restart_apache
+
+- name: "Replace default vhost configuration."
+  template:
+    src=000-default.conf.j2
+    dest=/etc/apache2/sites-available/000-default.conf
+    owner=root
+    group=root
+    mode=0644
+  notify: restart_apache
+
+- name: "Replace default SSL vhost configurations."
+  copy:
+    src=apache/default-ssl.conf
+    dest=/etc/apache2/sites-available/default-ssl.conf
+    owner=root
+    group=root
+    mode=0644
+  notify: restart_apache
+
+# Memcache block.
+- block:
+  - name: "Install Memcache packages."
+    apt:
+      pkg={{ item }}
+      state=installed
+    with_items:
+      - memcached
+      - libmemcached-tools
+      - php-memcached
+
+  - name: "Configure Memcached."
+    template:
+      src=memcached.conf.j2
+      dest=/etc/memcached.conf
+      owner=root
+      group=root
+      mode=0644
+    notify: restart_memcached
+
+  - name: "Configure Memcached PHP module."
+    lineinfile:
+      dest=/etc/php/7.0/mods-available/memcached.ini
+      state=present
+      regexp='^memcache.hash_strategy'
+      line='memcache.hash_strategy="consistent"'
+    notify: restart_apache
+
+  when: memcache_install
+
+# Xdebug block.
+- block:
+  - name: "Install Xdebug packages."
+    apt:
+      pkg=php-xdebug
+      state=installed
+
+  - name: "Configure Xdebug."
+    template:
+      src=xdebug.ini.j2
+      dest=/etc/php/7.0/mods-available/xdebug.ini
+      owner=root
+      group=root
+      mode=0644
+    notify: restart_apache
+
+  when: xdebug_install
+
+# Tika block.
+- block:
+  - name: "Create Tika directory."
+    file:
+      path=/usr/share/tika
+      state=directory
+      owner=root
+      group=root
+
+  - name: "Install java"
+    apt:
+      pkg=default-jre
+      state=installed
+
+  - name: "Download Tika."
+    get_url:
+      url: http://ftp.nluug.nl/internet/apache/tika/tika-app-{{ tika_version }}.jar
+      dest: /usr/share/tika/tika-app-{{ tika_version }}.jar
+      mode: 0644
+
+  when: tika_install

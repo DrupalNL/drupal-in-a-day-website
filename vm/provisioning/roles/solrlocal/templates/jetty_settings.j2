@@ -1,0 +1,4 @@
+JAVA_OPTIONS="-Dsolr.solr.home=/usr/local/share/solr-{{ solr_version }}/drupal/multicore -Xmx{{ solr_java_max_heap_size }} -Xmn{{ solr_java_init_heap_size }} -Xss{{ solr_java_thread_stack_size }} $JAVA_OPTIONS"
+JETTY_HOME=/usr/local/share/solr-{{ solr_version }}/example
+JETTY_USER=vagrant
+JETTY_LOGS=/var/log/solr

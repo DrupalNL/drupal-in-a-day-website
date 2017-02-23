@@ -1,0 +1,64 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+require 'yaml'
+
+if File.exists? (File.join(__dir__, 'config/core.yml'))
+  core_config = YAML.load_file(File.join(__dir__, 'config/core.yml'))
+else
+  raise 'Core VM configuration file `config/core.yml` not found.'
+end
+
+if File.exists? (File.join(__dir__, 'config/custom.yml'))
+  custom_config = YAML.load_file(File.join(__dir__, 'config/custom.yml'))
+end
+
+public
+def deep_merge!(other_hash)
+  merge!(other_hash) do |key, oldval, newval|
+    oldval.class == self.class ? oldval.deep_merge!(newval) : newval
+  end
+end
+
+# Recursively merge core config with custom config.
+vm_config = core_config.deep_merge!(custom_config ? custom_config : {})
+
+Vagrant.configure(2) do |config|
+  config.vm.box = vm_config['vagrant']['box']
+  config.vm.box_version = vm_config['vagrant']['box_version']
+  config.vm.hostname = vm_config['vagrant']['hostname']
+  config.vm.network 'private_network', ip: vm_config['vagrant']['network']['private_network']
+
+  vm_config['vagrant']['network']['forwarded_ports'].each do |forwarded_port|
+    config.vm.network 'forwarded_port', guest: forwarded_port['guest'].to_i, host: forwarded_port['host'].to_i, auto_correct: true
+  end
+
+  vm_config['vagrant']['synced_folders'].each do |synced_folder|
+    config.vm.synced_folder synced_folder['host'], synced_folder['guest'],
+      type: synced_folder['type'],
+      rsync__auto: synced_folder['rsync__auto'],
+      rsync__args: synced_folder['rsync__args'],
+      rsync__exclude: synced_folder['rsync__exclude']
+  end
+
+  config.ssh.forward_agent = true
+  config.ssh.insert_key = false
+  config.ssh.private_key_path = vm_config['vagrant']['ssh_private_keys']
+
+  config.vm.provider 'virtualbox' do |vb|
+    vb.name = vm_config['vagrant']['hostname']
+    vb.linked_clone = true if Vagrant::VERSION =~ /^1.8/
+    vb.customize ['modifyvm', :id, '--memory', vm_config['vagrant']['memory'].to_i]
+    vb.customize ['modifyvm', :id, '--cpus', vm_config['vagrant']['cpus'].to_i]
+    #if vm_config['vagrant']['ssd']
+    # vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', '0', '--nonrotational', vm_config['vagrant']['ssd']]
+    #end
+  end
+
+  config.vm.provision 'ansible' do |ansible|
+    ansible.playbook = 'provisioning/site.yml'
+    ansible.inventory_path = 'provisioning/development'
+    ansible.extra_vars = vm_config['ansible']
+    ansible.sudo = true
+  end
+end

@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Database settings.
+ */
+
+$databases = array(
+  'default' => array(
+    'default' => array(
+      'driver' => 'mysql',
+      'database' => '{{ item.db_name }}',
+      'username' => '{{ item.db_name }}',
+      'password' => "{{ lookup('file', '/tmp/credentials/' + item.db_name + '/mysqlpassword') }}",
+      'host' => 'localhost',
+      'prefix' => '',
+      'collation' => 'utf8_general_ci',
+    ),
+  ),
+);

@@ -1,0 +1,10 @@
+<VirtualHost *:{{ apache_port }}>
+  ServerAdmin beheer@limoengroen.nl
+  DocumentRoot /var/www/default/htdocs
+
+  <Directory "/var/www/default/htdocs">
+    Options None
+    AllowOverride None
+    Require all denied
+  </Directory>
+</VirtualHost>

@@ -1,0 +1,7 @@
+---
+# file: roles/drupal/meta/main.yml
+
+dependencies:
+  - { role: common }
+  - { role: webserver }
+  - { role: dbserver }

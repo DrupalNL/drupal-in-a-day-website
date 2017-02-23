@@ -1,0 +1,5 @@
+---
+# file: roles/solr_local/meta/main.yml
+
+dependencies:
+  - { role: common }

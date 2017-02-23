@@ -1,0 +1,100 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name {{ item.server_name }} www.{{ item.server_name }}
+
+    client_max_body_size 32M;
+
+    location / {
+        proxy_buffers 8 24k;
+        proxy_buffer_size 2k;
+        proxy_pass http://localhost:6081;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location ~* \.(css|js|jpg|jpeg|gif|png|ico) {
+        root /var/www/{{ item.name }}/htdocs/;
+        expires max;
+        try_files $uri $uri/ @drupal;
+    }
+
+    location @drupal {
+         proxy_buffers 8 24k;
+         proxy_buffer_size 2k;
+         proxy_pass http://localhost:6081;
+         proxy_set_header Host $host;
+         proxy_set_header X-Real-IP $remote_addr;
+         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+         proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+#server {
+#    listen 80 default_server;
+#    listen [::]:80 default_server;
+#    server_name {{ item.server_name }};
+#    return 301 https://www.{{ item.server_name }}$request_uri;
+#}
+
+#server {
+#    listen 443;
+#    listen [::]:443;
+
+#    ssl on;
+#    ssl_prefer_server_ciphers On;
+#    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+#    ssl_ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS;
+#    ssl_certificate /var/www/{{ item.name }}/ssl/REPLACE_ME.pem;
+#    ssl_certificate_key /var/www/{{ item.name }}/ssl/REPLACE_ME.key;
+
+#    server_name {{ item.server_name }};
+
+#    return 301 https://www.{{ item.server_name }}$request_uri;
+#}
+
+#server {
+#    listen 443 default_server;
+#    listen [::]:443 default_server;
+
+#    ssl on;
+#    ssl_prefer_server_ciphers On;
+#    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+#    ssl_ciphers ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS;
+#    ssl_certificate /var/www/{{ item.name }}/ssl/REPLACE_ME.pem;
+#    ssl_certificate_key /var/www/{{ item.name }}/ssl/REPLACE_ME.key;
+#    ssl_dhparam /etc/ssl/private/dhparams.pem;
+
+#    server_name www.{{ item.server_name }};
+
+#    client_max_body_size 32M;
+
+#    location / {
+#        proxy_buffers 8 24k;
+#        proxy_buffer_size 2k;
+#        proxy_pass http://localhost:6081;
+#        proxy_set_header Host $host;
+#        proxy_set_header X-Real-IP $remote_addr;
+#        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#        proxy_set_header X-Forwarded-Proto $scheme;
+#    }
+
+#    location ~* \.(css|js|jpg|jpeg|gif|png|ico) {
+#        root /var/www/{{ item.name }}/htdocs/;
+#        expires max;
+#        try_files $uri $uri/ @drupal;
+#    }
+
+#    location @drupal {
+#        proxy_buffers 8 24k;
+#        proxy_buffer_size 2k;
+#        proxy_pass http://localhost:6081;
+#        proxy_set_header Host $host;
+#        proxy_set_header X-Real-IP $remote_addr;
+#        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+#        proxy_set_header X-Forwarded-Proto $scheme;
+#    }
+
+#}

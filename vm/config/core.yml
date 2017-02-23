@@ -1,0 +1,58 @@
+---
+vagrant:
+  box: bento/ubuntu-16.04
+  box_version: 2.2.9
+  hostname: drupal-training.day
+  network:
+    forwarded_ports:
+      - guest: 80
+        host: 8080
+    private_network: &private_network 10.0.42.42
+  memory: 2048
+  cpus: 4
+  ssd: "on"
+  ssh_private_keys:
+    - ~/.vagrant.d/insecure_private_key
+ansible:
+  ssh_host: *private_network
+  ssh_user: vagrant
+  admin_keys: []
+  keys: []
+  fail2ban_install: false
+  postfix_install: false
+  apache_user: vagrant
+  apache_user_group: vagrant
+  apache_port: 80
+  mysql_root_password: root
+  nginx_install: false
+  nginx_user: vagrant
+  nginx_user_group: vagrant
+  varnish_install: false
+  varnish_drupal_version: 8
+  php_error_reporting: "E_ALL"
+  php_display_errors: On
+  php_modules: []
+  opcache_revalidate_freq: 0
+  xdebug_install: true
+  solr_install: false
+  solr_version: 4.10.4
+  es_install: false
+  es_version: 1.7
+  tika_install: false
+  tika_version: 1.13
+  drush_version: 8.*
+  sites:
+    - name: drupal-training-day
+      reprovision: true
+      drupal_version: 8
+      db_name: drupal-training-day
+      server_name: drupal-training.day
+      server_aliases: []
+      docroot: "/var/www/drupal-training-day/web"
+      directory_index: index.php
+      cron_configure: true
+      drush_cron_command: cron
+      cron_minute: "0"
+      acl: false
+      solr_use_core_config: false
+      solr_config_dir: ""

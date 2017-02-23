@@ -1,0 +1,20 @@
+<VirtualHost *:{{ apache_port }}>
+  ServerAdmin webmaster@{{ item.server_name }}
+  ServerName {{ item.server_name }}
+
+  DocumentRoot {{ item.docroot }}
+  DirectoryIndex index.php
+
+  LogLevel warn
+  ErrorLog ${APACHE_LOG_DIR}/{{ item.name }}_error.log
+  CustomLog ${APACHE_LOG_DIR}/{{ item.name }}_access.log combined
+
+  RewriteEngine on
+  RewriteRule ^/favicon.ico - [R=404,L]
+
+  <Directory "{{ item.docroot }}">
+    AllowOverride All
+    Options -Indexes +FollowSymLinks
+    Require all granted
+  </Directory>
+</VirtualHost>

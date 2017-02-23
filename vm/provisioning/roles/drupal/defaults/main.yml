@@ -1,0 +1,25 @@
+---
+# file: roles/drupal/defaults/main.yml
+
+reroute_email: catchall@limoengroen.nl
+
+keys:
+  - "{{ lookup('file', '../public_keys/baris.pub') }}"
+  - "{{ lookup('file', '../public_keys/dirk.pub') }}"
+  - "{{ lookup('file', '../public_keys/dominique.pub') }}"
+  - "{{ lookup('file', '../public_keys/heine.pub') }}"
+  - "{{ lookup('file', '../public_keys/jenkins.pub') }}"
+  - "{{ lookup('file', '../public_keys/martijn.pub') }}"
+  - "{{ lookup('file', '../public_keys/martijn_broere.pub') }}"
+  - "{{ lookup('file', '../public_keys/rudi.pub') }}"
+  - "{{ lookup('file', '../public_keys/jack.pub') }}"
+  - "{{ lookup('file', '../public_keys/laurie.pub') }}"
+
+removed_keys:
+  - "{{ lookup('file', '../removed_keys/jack_old.pub') }}"
+  - "{{ lookup('file', '../removed_keys/david.pub') }}"
+  - "{{ lookup('file', '../removed_keys/jasper.pub') }}"
+
+drush_version: 8.*
+
+apache_port: 80

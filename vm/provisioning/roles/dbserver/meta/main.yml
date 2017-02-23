@@ -1,0 +1,5 @@
+---
+# file: roles/dbserver/meta/main.yml
+
+dependencies:
+  - { role: common }

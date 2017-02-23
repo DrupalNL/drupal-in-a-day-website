@@ -1,0 +1,7 @@
+---
+# file: eslocal.yml
+
+- name: "Configure the Elasticsearch local servers."
+  hosts: drupal-dev
+  roles:
+    - eslocal

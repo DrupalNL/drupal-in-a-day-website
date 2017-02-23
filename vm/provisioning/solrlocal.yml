@@ -1,0 +1,7 @@
+---
+# file: solr_local.yml
+
+- name: "Configure the Solr local servers."
+  hosts: drupal-dev
+  roles:
+    - solrlocal

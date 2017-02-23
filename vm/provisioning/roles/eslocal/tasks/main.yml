@@ -1,0 +1,38 @@
+---
+# file: roles/es_local/tasks/main.yml
+
+# Elasticsearch block.
+- block:
+  - name: "Install java package."
+    apt:
+      pkg=default-jre
+      state=installed
+
+  - name: "Add Elasticsearch apt repository."
+    apt_repository:
+      repo="deb https://packages.elastic.co/elasticsearch/{{ es_version }}/debian stable main"
+      state=present
+
+  - name: "Add Elasticsearch apt key."
+    apt_key:
+      url=https://packages.elastic.co/GPG-KEY-elasticsearch
+      validate_certs=false
+      state=present
+
+  - name: "Update apt cache."
+    apt:
+      update_cache=yes
+
+  - name: "Install Elasticsearch."
+    apt:
+      pkg=elasticsearch
+      state=installed
+      allow_unauthenticated=yes
+
+  - name: "Enable Elasticsearch service."
+    service:
+      name=elasticsearch
+      enabled=yes
+    notify: restart_es
+
+  when: es_install

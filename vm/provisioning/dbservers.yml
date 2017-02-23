@@ -1,0 +1,7 @@
+---
+# file: dbservers.yml
+
+- name: "Configure the db servers."
+  hosts: dbservers
+  roles:
+    - dbserver

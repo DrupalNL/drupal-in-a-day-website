@@ -1,0 +1,5 @@
+<VirtualHost *:{{ apache_port }}>
+  ServerAdmin webmaster@{{ item.1 }}
+  ServerName {{ item.1 }}
+  Redirect permanent / http://{{ item.0.server_name }}/
+</VirtualHost>

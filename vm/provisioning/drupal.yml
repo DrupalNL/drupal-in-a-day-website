@@ -1,0 +1,7 @@
+---
+# file: drupal.yml
+
+- name: "Configure the Drupal servers."
+  hosts: drupal-dev
+  roles:
+    - drupal

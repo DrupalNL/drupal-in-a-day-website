@@ -1,0 +1,241 @@
+---
+# file: roles/common/tasks/main.yml
+
+- name: "Update APT cache if outdated."
+  apt:
+    update_cache=yes
+    cache_valid_time=3600
+
+- name: "Install packages."
+  apt:
+    pkg={{ item }}
+    state=installed
+  with_items:
+    - aptitude
+    - apt-transport-https
+    - python-apt
+    - ntp
+    - ntpdate
+    - curl
+    - whois
+    - unzip
+    - git
+
+- name: "Update APT packages."
+  apt:
+    upgrade=yes
+
+- name: "Update sudoers file to allow sudo group to sudo without password."
+  lineinfile:
+    "dest=/etc/sudoers
+    state=present
+    regexp='^%sudo ALL='
+    line='%sudo ALL=(ALL) NOPASSWD: ALL'"
+
+- name: "Create the limoengroen group."
+  group:
+    name=limoengroen
+    state=present
+
+- name: "Generate strong password"
+  command: mkpasswd --method=sha-512 "{{ lookup('password', '/tmp/credentials/limoengroen/userpassword length=15') }}"
+  register: strong_password
+
+- name: "Create the limoengroen user."
+  user:
+    name=limoengroen
+    group=limoengroen
+    password="{{ strong_password["stdout"] }}"
+    groups=sudo
+    state=present
+    shell=/bin/bash
+
+- name: "Set up SSH keys for the limoengroen user."
+  authorized_key:
+    user=limoengroen
+    key="{{ item }}"
+    state=present
+  with_items: "{{ admin_keys }}"
+  tags:
+    - update_keys
+
+#- name: "Remove SSH keys for the limoengroen user."
+#  authorized_key:
+#    user=limoengroen
+#    key="{{ item }}"
+#    state=absent
+#  with_items: "{{ removed_admin_keys }}"
+#  tags:
+#    - update_keys
+
+- name: "Only permit root login using an SSH key."
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    state=present
+    regexp='^PermitRootLogin'
+    line='PermitRootLogin without-password'
+  notify: restart_ssh
+
+- name: "Disable plain password authentication."
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    state=present
+    regexp='^PasswordAuthentication'
+    line='PasswordAuthentication no'
+  notify: restart_ssh
+
+- name: "Disable PAM."
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    state=present
+    regexp='^UsePAM'
+    line='UsePAM no'
+  notify: restart_ssh
+
+- name: "Set secure ciphers."
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    state=present
+    regexp='^Ciphers'
+    line='Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com,chacha20-poly1305@openssh.com'
+  notify: restart_ssh
+
+- name: "Set secure macs."
+  lineinfile:
+    dest=/etc/ssh/sshd_config
+    state=present
+    regexp='^MACs'
+    line='MACs hmac-sha1-etm@openssh.com,umac-64-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512-etm@openssh.com,hmac-ripemd160-etm@openssh.com,hmac-sha1,umac-64@openssh.com,umac-128@openssh.com,hmac-sha2-256,hmac-sha2-512,hmac-ripemd160'
+  notify: restart_ssh
+
+# Filebeat block.
+- block:
+  - name: "Create certificates folder."
+    file:
+      path=/etc/pki/tls/certs
+      state=directory
+      owner=root
+      group=root
+
+  - name: "Copy logstash certificate."
+    copy:
+      src=filebeat/logstash-forwarder.crt
+      dest=/etc/pki/tls/certs/logstash-forwarder.crt
+      owner=root
+      group=root
+      mode=0644
+
+  - name: "Add Filebeat apt repository."
+    apt_repository:
+      repo="deb https://packages.elastic.co/beats/apt stable main"
+      state=present
+
+  - name: "Add Filebeat apt key."
+    apt_key:
+      url=https://packages.elastic.co/GPG-KEY-elasticsearch
+      state=present
+
+  - name: "Update apt cache."
+    apt:
+      update_cache=yes
+
+  - name: "Install Filebeat."
+    apt:
+      pkg="filebeat"
+      state=installed
+
+  - name: "Configure Filebeat."
+    copy:
+      src=filebeat/filebeat.yml
+      dest=/etc/filebeat/filebeat.yml
+      owner=root
+      group=root
+      mode=0644
+    notify: restart_filebeat
+
+  - name: "Make Filebeat start when the server is restarted."
+    command: update-rc.d filebeat defaults 95 10
+    args:
+      creates: /etc/rc0.d/K10filebeat
+
+  - name: "Create drupal logs folder."
+    file:
+      path=/var/log/drupal
+      state=directory
+      owner=syslog
+      group=adm
+
+  - name: "Create drupal log config file for rsyslog."
+    file:
+      path=/etc/rsyslog.d/30-drupal.conf
+      state=touch
+      owner=root
+      group=root
+      mode=0644
+    notify: restart_rsyslog
+
+  - name: "Enable log rotation on drupal logs."
+    copy:
+      src=logrotate/drupal
+      dest=/etc/logrotate.d/drupal
+      owner=root
+      group=root
+      mode=0644
+
+  when: filebeat_install
+
+# Fail2Ban block.
+- block:
+  - name: "Install Fail2ban."
+    apt:
+      pkg="fail2ban"
+      state=installed
+
+  - name: "Configure fail2ban."
+    lineinfile:
+      dest=/etc/fail2ban/jail.conf
+      state=present
+      regexp='^ignoreip'
+      line='ignoreip = {{ fail2ban_ignoreip }}'
+    notify: restart_fail2ban
+
+  when: fail2ban_install
+
+# Postfix block.
+- block:
+  - name: "Install packages."
+    apt:
+      pkg={{ item }}
+      state=installed
+    with_items:
+      - postfix
+      - libsasl2-modules
+
+  - name: "Configure postfix."
+    template:
+      src=main.cf.j2
+      dest=/etc/postfix/main.cf
+      owner=root
+      group=root
+      mode=0644
+    notify: restart_postfix
+
+  when: postfix_install
+
+# IPtables block.
+- block:
+  - name: "Install IPtables persistent package."
+    apt:
+      pkg="iptables-persistent"
+      state=installed
+
+  - name: "Create IPtables configurations."
+    copy:
+      src=iptables/
+      dest=/etc/iptables/
+      owner=root
+      group=root
+      mode=0644
+    notify: restart_iptables_persistent
+
+  when: iptables_install

@@ -1,0 +1,7 @@
+---
+# file: roles/solr_local/defaults/main.yml
+
+solr_version: 4.10.4
+solr_java_max_heap_size: 128M
+solr_java_init_heap_size: 32M
+solr_java_thread_stack_size: 256k

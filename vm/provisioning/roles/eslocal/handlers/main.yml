@@ -1,0 +1,7 @@
+---
+# file: roles/es_local/handlers/main.yml
+
+- name: restart_es
+  service:
+    name=elasticsearch
+    state=restarted

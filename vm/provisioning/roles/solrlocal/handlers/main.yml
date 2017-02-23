@@ -1,0 +1,5 @@
+---
+# file: roles/solr_local/handlers/main.yml
+
+- name: restart_jetty
+  command: /etc/init.d/jetty restart

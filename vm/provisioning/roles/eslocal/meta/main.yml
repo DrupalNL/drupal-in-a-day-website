@@ -1,0 +1,5 @@
+---
+# file: roles/es_local/meta/main.yml
+
+dependencies:
+  - { role: common }
