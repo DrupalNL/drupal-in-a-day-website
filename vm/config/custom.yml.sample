@@ -1,11 +1,11 @@
 ---
 vagrant:
   synced_folders:
-    - host: "/Users/username/Sites/drupal-training-day/web"
-      guest: /var/www/drupal-training-day/web
+    - host: "/Users/username/Sites/drupal-in-a-day-website/web"
+      guest: /var/www/drupal-in-a-day-website/web
       type: nfs
-    - host: "/Users/username/Sites/drupal-training-day/vendor"
-      guest: /var/www/drupal-training-day/vendor
+    - host: "/Users/username/Sites/drupal-in-a-day-website/vendor"
+      guest: /var/www/drupal-in-a-day-website/vendor
       type: nfs
     - host: "/Users/username/.drush/aliases"
       guest: /etc/drush

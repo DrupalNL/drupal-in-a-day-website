@@ -2,7 +2,7 @@
 vagrant:
   box: bento/ubuntu-16.04
   box_version: 2.2.9
-  hostname: drupal-training.day
+  hostname: drupal-in-a-day.website
   network:
     forwarded_ports:
       - guest: 80
@@ -42,13 +42,13 @@ ansible:
   tika_version: 1.13
   drush_version: 8.*
   sites:
-    - name: drupal-training-day
+    - name: drupal-in-a-day-website
       reprovision: true
       drupal_version: 8
-      db_name: drupal-training-day
-      server_name: drupal-training.day
+      db_name: drupal-in-a-day-website
+      server_name: drupal-in-a-day.website
       server_aliases: []
-      docroot: "/var/www/drupal-training-day/web"
+      docroot: "/var/www/drupal-in-a-day-website/web"
       directory_index: index.php
       cron_configure: true
       drush_cron_command: cron
