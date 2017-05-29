@@ -5,7 +5,6 @@ module:
   ckeditor: 0
   coffee: 0
   config: 0
-  config_update: 0
   content_moderation: 0
   datetime: 0
   dblog: 0
