@@ -1,0 +1,23 @@
+uuid: 28766c7a-a172-4484-b643-40e8137bea07
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_max_items
+    - paragraphs.paragraphs_type.events
+id: paragraph.events.field_max_items
+field_name: field_max_items
+entity_type: paragraph
+bundle: events
+label: 'Number of items'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

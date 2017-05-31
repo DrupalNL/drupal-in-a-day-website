@@ -1,0 +1,7 @@
+uuid: 17578f1b-f542-499a-b584-3973d81c23a7
+langcode: en
+status: true
+dependencies: {  }
+id: events
+label: Events
+behavior_plugins: {  }
