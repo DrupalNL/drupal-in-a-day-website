@@ -1,0 +1,64 @@
+uuid: 0bd0b1c3-11bc-406d-af6c-25225cc9218c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_sidebar
+    - node.type.page
+    - paragraphs.paragraphs_type.image
+    - paragraphs.paragraphs_type.links
+    - paragraphs.paragraphs_type.teaser
+  module:
+    - entity_reference_revisions
+id: node.page.field_sidebar
+field_name: field_sidebar
+entity_type: node
+bundle: page
+label: Sidebar
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      image: image
+      links: links
+      teaser: teaser
+    target_bundles_drag_drop:
+      events:
+        weight: 12
+        enabled: false
+      faq:
+        weight: 13
+        enabled: false
+      hero:
+        weight: 14
+        enabled: false
+      image:
+        enabled: true
+        weight: 15
+      links:
+        enabled: true
+        weight: 16
+      organiser:
+        weight: 17
+        enabled: false
+      programme:
+        weight: 18
+        enabled: false
+      sponsor:
+        weight: 19
+        enabled: false
+      stories:
+        weight: 20
+        enabled: false
+      teaser:
+        enabled: true
+        weight: 21
+      text:
+        weight: 22
+        enabled: false
+field_type: entity_reference_revisions
