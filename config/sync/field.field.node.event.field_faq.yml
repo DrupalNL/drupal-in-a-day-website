@@ -1,0 +1,60 @@
+uuid: 08700a26-7fb1-48a6-8f44-fa35e667bfa0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_faq
+    - node.type.event
+    - paragraphs.paragraphs_type.faq
+  module:
+    - entity_reference_revisions
+id: node.event.field_faq
+field_name: field_faq
+entity_type: node
+bundle: event
+label: FAQ
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      faq: faq
+    target_bundles_drag_drop:
+      events:
+        weight: 12
+        enabled: false
+      faq:
+        enabled: true
+        weight: 13
+      hero:
+        weight: 14
+        enabled: false
+      image:
+        weight: 15
+        enabled: false
+      links:
+        weight: 16
+        enabled: false
+      organiser:
+        weight: 17
+        enabled: false
+      programme:
+        weight: 18
+        enabled: false
+      sponsor:
+        weight: 19
+        enabled: false
+      stories:
+        weight: 20
+        enabled: false
+      teaser:
+        weight: 21
+        enabled: false
+      text:
+        weight: 22
+        enabled: false
+field_type: entity_reference_revisions

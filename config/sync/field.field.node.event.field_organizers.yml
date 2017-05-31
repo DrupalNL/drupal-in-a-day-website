@@ -1,0 +1,60 @@
+uuid: b663cd01-2994-4e42-8314-49699953d64b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_organizers
+    - node.type.event
+    - paragraphs.paragraphs_type.organiser
+  module:
+    - entity_reference_revisions
+id: node.event.field_organizers
+field_name: field_organizers
+entity_type: node
+bundle: event
+label: Organizers
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      organiser: organiser
+    target_bundles_drag_drop:
+      events:
+        weight: 12
+        enabled: false
+      faq:
+        weight: 13
+        enabled: false
+      hero:
+        weight: 14
+        enabled: false
+      image:
+        weight: 15
+        enabled: false
+      links:
+        weight: 16
+        enabled: false
+      organiser:
+        enabled: true
+        weight: 17
+      programme:
+        weight: 18
+        enabled: false
+      sponsor:
+        weight: 19
+        enabled: false
+      stories:
+        weight: 20
+        enabled: false
+      teaser:
+        weight: 21
+        enabled: false
+      text:
+        weight: 22
+        enabled: false
+field_type: entity_reference_revisions

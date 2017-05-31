@@ -1,0 +1,60 @@
+uuid: b3651fc0-3f6a-4d35-a4ce-4fe034dbedac
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_sponsors
+    - node.type.event
+    - paragraphs.paragraphs_type.sponsor
+  module:
+    - entity_reference_revisions
+id: node.event.field_sponsors
+field_name: field_sponsors
+entity_type: node
+bundle: event
+label: Sponsors
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      sponsor: sponsor
+    target_bundles_drag_drop:
+      events:
+        weight: 12
+        enabled: false
+      faq:
+        weight: 13
+        enabled: false
+      hero:
+        weight: 14
+        enabled: false
+      image:
+        weight: 15
+        enabled: false
+      links:
+        weight: 16
+        enabled: false
+      organiser:
+        weight: 17
+        enabled: false
+      programme:
+        weight: 18
+        enabled: false
+      sponsor:
+        enabled: true
+        weight: 19
+      stories:
+        weight: 20
+        enabled: false
+      teaser:
+        weight: 21
+        enabled: false
+      text:
+        weight: 22
+        enabled: false
+field_type: entity_reference_revisions

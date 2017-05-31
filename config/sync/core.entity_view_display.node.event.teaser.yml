@@ -1,0 +1,17 @@
+uuid: 41970305-8093-4baa-985b-f9a511bfc21f
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - node.type.event
+  module:
+    - user
+id: node.event.teaser
+targetEntityType: node
+bundle: event
+mode: teaser
+content:
+  links:
+    weight: 100
+hidden: {  }

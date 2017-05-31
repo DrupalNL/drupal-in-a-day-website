@@ -1,0 +1,60 @@
+uuid: 759b3dee-3222-402b-874b-dd76caeb7740
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_programme
+    - node.type.event
+    - paragraphs.paragraphs_type.programme
+  module:
+    - entity_reference_revisions
+id: node.event.field_programme
+field_name: field_programme
+entity_type: node
+bundle: event
+label: Programme
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      programme: programme
+    target_bundles_drag_drop:
+      events:
+        weight: 12
+        enabled: false
+      faq:
+        weight: 13
+        enabled: false
+      hero:
+        weight: 14
+        enabled: false
+      image:
+        weight: 15
+        enabled: false
+      links:
+        weight: 16
+        enabled: false
+      organiser:
+        weight: 17
+        enabled: false
+      programme:
+        enabled: true
+        weight: 18
+      sponsor:
+        weight: 19
+        enabled: false
+      stories:
+        weight: 20
+        enabled: false
+      teaser:
+        weight: 21
+        enabled: false
+      text:
+        weight: 22
+        enabled: false
+field_type: entity_reference_revisions
