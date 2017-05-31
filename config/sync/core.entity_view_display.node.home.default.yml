@@ -1,0 +1,35 @@
+uuid: ffb329eb-06db-4dfd-b1d7-f6799703467a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.home.field_content
+    - field.field.node.home.field_hero
+    - node.type.home
+  module:
+    - entity_reference_revisions
+    - user
+id: node.home.default
+targetEntityType: node
+bundle: home
+mode: default
+content:
+  field_content:
+    type: entity_reference_revisions_entity_view
+    weight: 102
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+  field_hero:
+    type: entity_reference_revisions_entity_view
+    weight: 101
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+  links:
+    weight: 100
+hidden: {  }
