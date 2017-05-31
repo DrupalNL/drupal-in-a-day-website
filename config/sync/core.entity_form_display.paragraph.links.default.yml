@@ -1,0 +1,26 @@
+uuid: c932800b-7e98-496a-b742-d525895b46f8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.links.field_links
+    - paragraphs.paragraphs_type.links
+  module:
+    - content_moderation
+    - link
+id: paragraph.links.default
+targetEntityType: paragraph
+bundle: links
+mode: default
+content:
+  field_links:
+    weight: 6
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+hidden:
+  created: true
+  status: true
+  uid: true
