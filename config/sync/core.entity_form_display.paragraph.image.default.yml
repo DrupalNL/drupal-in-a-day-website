@@ -7,7 +7,6 @@ dependencies:
     - image.style.thumbnail
     - paragraphs.paragraphs_type.image
   module:
-    - content_moderation
     - image
 id: paragraph.image.default
 targetEntityType: paragraph
@@ -21,6 +20,7 @@ content:
       preview_image_style: thumbnail
     third_party_settings: {  }
     type: image_image
+    region: content
 hidden:
   created: true
   status: true

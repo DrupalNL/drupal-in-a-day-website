@@ -4,6 +4,14 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.event.field_action_links
+    - field.field.node.event.field_faq
+    - field.field.node.event.field_image
+    - field.field.node.event.field_location
+    - field.field.node.event.field_organizers
+    - field.field.node.event.field_programme
+    - field.field.node.event.field_sponsors
+    - field.field.node.event.field_text
     - node.type.event
   module:
     - user
@@ -14,4 +22,13 @@ mode: teaser
 content:
   links:
     weight: 100
-hidden: {  }
+    region: content
+hidden:
+  field_action_links: true
+  field_faq: true
+  field_image: true
+  field_location: true
+  field_organizers: true
+  field_programme: true
+  field_sponsors: true
+  field_text: true

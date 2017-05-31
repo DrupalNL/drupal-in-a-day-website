@@ -10,7 +10,6 @@ dependencies:
     - image.style.thumbnail
     - paragraphs.paragraphs_type.organiser
   module:
-    - content_moderation
     - image
     - link
 id: paragraph.organiser.default
@@ -25,6 +24,7 @@ content:
       preview_image_style: thumbnail
     third_party_settings: {  }
     type: image_image
+    region: content
   field_link:
     weight: 9
     settings:
@@ -32,6 +32,7 @@ content:
       placeholder_title: ''
     third_party_settings: {  }
     type: link_default
+    region: content
   field_subtitle:
     weight: 8
     settings:
@@ -39,6 +40,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
   field_title:
     weight: 7
     settings:
@@ -46,6 +48,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
 hidden:
   created: true
   status: true

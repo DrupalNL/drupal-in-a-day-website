@@ -4,6 +4,8 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.landing.field_content
+    - field.field.node.landing.field_teaser
     - node.type.landing
   module:
     - user
@@ -14,4 +16,7 @@ mode: teaser
 content:
   links:
     weight: 100
-hidden: {  }
+    region: content
+hidden:
+  field_content: true
+  field_teaser: true

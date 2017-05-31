@@ -8,7 +8,6 @@ dependencies:
     - field.field.paragraph.stories.field_show_pager
     - paragraphs.paragraphs_type.stories
   module:
-    - content_moderation
     - link
 id: paragraph.stories.default
 targetEntityType: paragraph
@@ -22,18 +21,21 @@ content:
       placeholder_title: ''
     third_party_settings: {  }
     type: link_default
+    region: content
   field_max_items:
     weight: 6
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: number
+    region: content
   field_show_pager:
     weight: 7
     settings:
       display_label: true
     third_party_settings: {  }
     type: boolean_checkbox
+    region: content
 hidden:
   created: true
   status: true

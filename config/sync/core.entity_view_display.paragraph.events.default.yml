@@ -25,6 +25,7 @@ content:
       target: ''
     third_party_settings: {  }
     type: link
+    region: content
   field_max_items:
     weight: 0
     label: above
@@ -33,6 +34,7 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     type: number_integer
+    region: content
   field_show_pager:
     weight: 1
     label: above
@@ -42,4 +44,5 @@ content:
       format_custom_true: ''
     third_party_settings: {  }
     type: boolean
+    region: content
 hidden: {  }
