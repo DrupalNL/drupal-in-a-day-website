@@ -1,0 +1,44 @@
+uuid: 4ce5f321-516e-4b5a-920e-11aafbe702e5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.sponsor.field_image
+    - field.field.paragraph.sponsor.field_link
+    - field.field.paragraph.sponsor.field_title
+    - image.style.thumbnail
+    - paragraphs.paragraphs_type.sponsor
+  module:
+    - content_moderation
+    - image
+    - link
+id: paragraph.sponsor.default
+targetEntityType: paragraph
+bundle: sponsor
+mode: default
+content:
+  field_image:
+    weight: 6
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+  field_link:
+    weight: 8
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+  field_title:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+hidden:
+  created: true
+  status: true
+  uid: true

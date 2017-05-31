@@ -1,0 +1,7 @@
+uuid: bdc202c6-af3c-4779-8c3a-4197f6fcad92
+langcode: en
+status: true
+dependencies: {  }
+id: sponsor
+label: Sponsor
+behavior_plugins: {  }
