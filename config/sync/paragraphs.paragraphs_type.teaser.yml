@@ -1,0 +1,7 @@
+uuid: 55bedf16-f8fc-4535-b32e-d52182d7426a
+langcode: en
+status: true
+dependencies: {  }
+id: teaser
+label: Teaser
+behavior_plugins: {  }
