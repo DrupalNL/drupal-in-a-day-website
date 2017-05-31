@@ -1,0 +1,14 @@
+name: Diad 8.x
+type: theme
+description: Drupal-In-A-Day theme
+package: Other
+core: 8.x
+screenshot: diad.png
+
+libraries:
+  - diad/global-styling
+
+base theme: stable
+
+regions:
+  content: Content
