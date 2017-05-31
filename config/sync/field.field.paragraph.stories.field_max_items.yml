@@ -1,0 +1,23 @@
+uuid: 7b987d25-7b48-4545-9062-49f1dbfb7820
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_max_items
+    - paragraphs.paragraphs_type.stories
+id: paragraph.stories.field_max_items
+field_name: field_max_items
+entity_type: paragraph
+bundle: stories
+label: 'Number of items'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer
