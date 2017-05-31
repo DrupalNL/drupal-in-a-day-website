@@ -1,0 +1,64 @@
+uuid: b7b7aa60-a9a4-43f0-8ea6-c4b280923fea
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_content
+    - node.type.landing
+    - paragraphs.paragraphs_type.image
+    - paragraphs.paragraphs_type.links
+    - paragraphs.paragraphs_type.text
+  module:
+    - entity_reference_revisions
+id: node.landing.field_content
+field_name: field_content
+entity_type: node
+bundle: landing
+label: Content
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      image: image
+      links: links
+      text: text
+    target_bundles_drag_drop:
+      events:
+        weight: 12
+        enabled: false
+      faq:
+        weight: 13
+        enabled: false
+      hero:
+        weight: 14
+        enabled: false
+      image:
+        enabled: true
+        weight: 15
+      links:
+        enabled: true
+        weight: 16
+      organiser:
+        weight: 17
+        enabled: false
+      programme:
+        weight: 18
+        enabled: false
+      sponsor:
+        weight: 19
+        enabled: false
+      stories:
+        weight: 20
+        enabled: false
+      teaser:
+        weight: 21
+        enabled: false
+      text:
+        enabled: true
+        weight: 22
+field_type: entity_reference_revisions

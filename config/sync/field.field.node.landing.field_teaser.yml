@@ -1,0 +1,60 @@
+uuid: 1960fcd8-6d5e-4d48-ba83-c025eaad9163
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_teaser
+    - node.type.landing
+    - paragraphs.paragraphs_type.teaser
+  module:
+    - entity_reference_revisions
+id: node.landing.field_teaser
+field_name: field_teaser
+entity_type: node
+bundle: landing
+label: Teasers
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      teaser: teaser
+    target_bundles_drag_drop:
+      events:
+        weight: 12
+        enabled: false
+      faq:
+        weight: 13
+        enabled: false
+      hero:
+        weight: 14
+        enabled: false
+      image:
+        weight: 15
+        enabled: false
+      links:
+        weight: 16
+        enabled: false
+      organiser:
+        weight: 17
+        enabled: false
+      programme:
+        weight: 18
+        enabled: false
+      sponsor:
+        weight: 19
+        enabled: false
+      stories:
+        weight: 20
+        enabled: false
+      teaser:
+        enabled: true
+        weight: 21
+      text:
+        weight: 22
+        enabled: false
+field_type: entity_reference_revisions
