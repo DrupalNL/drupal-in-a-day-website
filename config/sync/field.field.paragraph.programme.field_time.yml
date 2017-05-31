@@ -1,0 +1,21 @@
+uuid: 132a97fd-5731-4737-a609-cc2201d92362
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_time
+    - paragraphs.paragraphs_type.programme
+  module:
+    - datetime
+id: paragraph.programme.field_time
+field_name: field_time
+entity_type: paragraph
+bundle: programme
+label: Time
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

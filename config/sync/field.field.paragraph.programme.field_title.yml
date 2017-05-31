@@ -1,0 +1,19 @@
+uuid: a14fca37-139e-4c80-8d1c-213c6b443684
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_title
+    - paragraphs.paragraphs_type.programme
+id: paragraph.programme.field_title
+field_name: field_title
+entity_type: paragraph
+bundle: programme
+label: Title
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

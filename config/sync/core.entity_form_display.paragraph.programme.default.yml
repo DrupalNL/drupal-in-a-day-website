@@ -1,0 +1,41 @@
+uuid: d5cf563f-4231-4dde-9715-fc49753edd06
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.programme.field_text
+    - field.field.paragraph.programme.field_time
+    - field.field.paragraph.programme.field_title
+    - paragraphs.paragraphs_type.programme
+  module:
+    - content_moderation
+    - datetime
+    - text
+id: paragraph.programme.default
+targetEntityType: paragraph
+bundle: programme
+mode: default
+content:
+  field_text:
+    weight: 8
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+  field_time:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+  field_title:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+hidden:
+  created: true
+  status: true
+  uid: true
