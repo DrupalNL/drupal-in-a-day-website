@@ -17,3 +17,8 @@ $databases['default']['default'] = [
   'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
   'driver'    => 'mysql',
 ];
+
+/**
+ * Configuration overrides.
+ */
+$config['config_split.config_split.development']['status'] = FALSE;

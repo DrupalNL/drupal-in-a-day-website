@@ -34,7 +34,7 @@ The [Config Installer](https://www.drupal.org/project/config_installer) module w
 More information on the module can be found in [this blog](https://evolvingweb.ca/blog/restoring-drupal-8-site-configuration-files). 
 Using drush you can easily set up a fresh installation for test/development:
 - Make sure all composer packages are installed.
-- Copy _web/sites/default/example.settings.local.php_ to _web/sites/default/settings.local.php_.
+- Copy _web/sites/default/default.settings.local.php_ to _web/sites/default/settings.local.php_.
 - Add database credentials and other custom config in your _settings.local.php_.
 - Run the drush site install from the _web_ directory:
 ```drush si config_installer --account-name=[username-user-1] --account-pass=[your-password]````
