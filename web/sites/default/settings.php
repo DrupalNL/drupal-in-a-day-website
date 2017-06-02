@@ -6,30 +6,16 @@
  */
 
 /**
- * Database settings:
- */
-$databases['default']['default'] = array (
-  'database' => '',
-  'username' => '',
-  'password' => '',
-  'prefix' => '',
-  'host' => 'localhost',
-  'port' => '3306',
-  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
-  'driver' => 'mysql',
-);
-
-/**
  * Location of the site configuration files.
  */
-$config_directories = array(
+$config_directories = [
   'sync' => './../config/sync',
-);
+];
 
 /**
  * The active installation profile.
  */
-$settings['install_profile'] = 'minimal';
+$settings['install_profile'] = 'standard';
 
 /**
  * Salt for one-time login links, cancel links, form tokens, etc.
@@ -47,7 +33,7 @@ $settings['hash_salt'] = 'vCPfn97C_hbrFOaJN_89xl4_NJy_TqXP1lcoF4HTA0JVAR0qSnQ2vZ
 $settings['update_free_access'] = FALSE;
 
 /**
- * Page caching:
+ * Page caching.
  */
 # $settings['omit_vary_cookie'] = TRUE;
 
@@ -58,7 +44,7 @@ $settings['update_free_access'] = FALSE;
 # $settings['cache_ttl_4xx'] = 3600;
 
 /**
- * Authorized file system operations:
+ * Authorized file system operations.
  */
 $settings['allow_authorize_operations'] = FALSE;
 
@@ -69,27 +55,27 @@ $settings['allow_authorize_operations'] = FALSE;
 # $settings['file_chmod_file'] = 0664;
 
 /**
- * Public file base URL:
+ * Public file base URL.
  */
 # $settings['file_public_base_url'] = 'http://downloads.example.com/files';
 
 /**
- * Public file path:
+ * Public file path.
  */
 $settings['file_public_path'] = 'sites/default/files';
 
 /**
- * Private file path:
+ * Private file path.
  */
 $settings['file_private_path'] = 'sites/default/files/private';
 
 /**
- * Session write interval:
+ * Session write interval.
  */
 # $settings['session_write_interval'] = 180;
 
 /**
- * String overrides:
+ * String overrides.
  */
 # $settings['locale_custom_strings_en'][''] = array(
 #   'forum'      => 'Discussion board',
@@ -97,17 +83,19 @@ $settings['file_private_path'] = 'sites/default/files/private';
 # );
 
 /**
- * PHP settings:
+ * PHP settings.
  */
 
 /**
  * Configuration overrides.
  */
-$config['samlauth.authentication']['login_redirect_url'] = 'https://t-scalda-portalen-cms.finalist.nl/sso/done';
-$config['samlauth.authentication']['login_redirect_url'] = 'https://t-scalda-portalen.finalist.nl/';
+# $config['system.site']['name'] = 'My Drupal site';
+# $config['system.theme']['default'] = 'stark';
+# $config['user.settings']['anonymous'] = 'Visitor';
+
 
 /**
- * Fast 404 pages:
+ * Fast 404 pages.
  */
 # $config['system.performance']['fast_404']['exclude_paths'] = '/\/(?:styles)|(?:system\/files)\//';
 # $config['system.performance']['fast_404']['paths'] = '/\.(?:txt|png|gif|jpe?g|css|js|ico|swf|flv|cgi|bat|pl|dll|exe|asp)$/i';

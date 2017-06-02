@@ -1,0 +1,15 @@
+attributes:
+  class:
+    label: ''
+    description: ''
+    options:
+      facebook: Facebook
+      twitter: Twitter
+      github: Github
+      mail: Mail
+  target:
+    label: ''
+    description: ''
+    options:
+      _blank: 'New window (_blank)'
+      _self: 'Same window (_self)'

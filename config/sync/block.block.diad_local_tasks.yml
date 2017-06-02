@@ -1,0 +1,22 @@
+uuid: 1288cfd1-8ed9-4887-b24c-09dcc1224c9c
+langcode: en
+status: true
+dependencies:
+  theme:
+    - diad
+_core:
+  default_config_hash: c-06bbElRY5sKmglk74ppgTW93Et4-EJFyNiUZMb8JY
+id: diad_local_tasks
+theme: diad
+region: content
+weight: -2
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: Tabs
+  provider: core
+  label_display: '0'
+  primary: true
+  secondary: true
+visibility: {  }

@@ -12,3 +12,5 @@ base theme: stable
 
 regions:
   content: Content
+  footer: Footer
+  header: Header

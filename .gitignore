@@ -12,6 +12,7 @@ web/.csslintrc
 web/.editorconfig
 web/.eslintignore
 web/.eslintrc
+web/.eslintrc.json
 web/.gitattributes
 web/.htaccess
 web/autoload.php
@@ -34,7 +35,7 @@ web/themes/README.txt
 web/profiles/README.txt
 
 # Ignore configuration files that may contain sensitive information.
-web/sites/*/settings*.php
+web/sites/*/settings.local.php
 web/sites/*/services.yml
 
 # Ignore Drupal's file directory.
@@ -56,7 +57,10 @@ FirePHPCore/*
 .settings
 .buildpath
 .idea
+.env
 docker-compose.yml
+docker-sync.yml
+.docker-sync
 
 # Ignore web.config file, not used.
 web.config

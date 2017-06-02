@@ -1,0 +1,24 @@
+uuid: a4e44183-29a8-4fdb-80e8-43281b4c4220
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - diad
+id: footer_navigation
+theme: diad
+region: footer
+weight: -4
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: 'Main navigation (footer)'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 1
+visibility: {  }

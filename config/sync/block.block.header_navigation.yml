@@ -1,0 +1,24 @@
+uuid: c447ac1a-05fd-453a-bafe-1fbf88f51d45
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - diad
+id: header_navigation
+theme: diad
+region: header
+weight: 0
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: 'system_menu_block:main'
+  label: 'Main navigation (header)'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 1
+visibility: {  }

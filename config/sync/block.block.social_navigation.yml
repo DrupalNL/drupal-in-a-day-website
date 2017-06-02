@@ -1,0 +1,24 @@
+uuid: c23227b0-8e92-482e-a021-5f961190135f
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.social
+  module:
+    - system
+  theme:
+    - diad
+id: social_navigation
+theme: diad
+region: footer
+weight: -3
+provider: null
+plugin: 'system_menu_block:social'
+settings:
+  id: 'system_menu_block:social'
+  label: 'Social navigation'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 1
+visibility: {  }
