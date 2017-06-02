@@ -1,20 +1,20 @@
-uuid: 2fe056e7-ae7d-4a20-91d3-6f33e6ed1744
+uuid: 1a38bee7-8184-435a-a9a5-439f60403f82
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_link
+    - field.storage.paragraph.field_links
     - paragraphs.paragraphs_type.hero
   module:
     - link
-id: paragraph.hero.field_link
-field_name: field_link
+id: paragraph.hero.field_links
+field_name: field_links
 entity_type: paragraph
 bundle: hero
-label: Link
+label: Links
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.hero.field_image
-    - field.field.paragraph.hero.field_link
+    - field.field.paragraph.hero.field_links
     - field.field.paragraph.hero.field_subtitle
     - field.field.paragraph.hero.field_title
     - image.style.thumbnail
@@ -25,7 +25,7 @@ content:
     third_party_settings: {  }
     type: image_image
     region: content
-  field_link:
+  field_links:
     weight: 9
     settings:
       placeholder_url: ''

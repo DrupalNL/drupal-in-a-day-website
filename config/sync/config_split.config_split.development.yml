@@ -1,0 +1,20 @@
+uuid: dbf29267-c232-41f4-83e7-2425815a6681
+langcode: en
+status: false
+dependencies: {  }
+id: development
+label: Development
+folder: ../config/dev
+module:
+  field_ui: 0
+  update: 0
+  views_ui: 0
+  devel: 0
+  kint: 0
+  webprofiler: 0
+theme: {  }
+blacklist: {  }
+graylist: {  }
+graylist_dependents: true
+graylist_skip_equal: true
+weight: 0

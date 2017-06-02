@@ -13,6 +13,12 @@ $config_directories = [
 ];
 
 /**
+ * Configuration overrides.
+ */
+$config['config_split.config_split.development']['status'] = FALSE;
+$config['config_split.config_split.excluded']['status'] = TRUE;
+
+/**
  * The active installation profile.
  */
 $settings['install_profile'] = 'standard';
