@@ -4,8 +4,12 @@ status: true
 dependencies:
   config:
     - field.field.node.event.field_action_links
+    - field.field.node.event.field_audience
+    - field.field.node.event.field_date
     - field.field.node.event.field_faq
+    - field.field.node.event.field_goal
     - field.field.node.event.field_image
+    - field.field.node.event.field_language
     - field.field.node.event.field_location
     - field.field.node.event.field_organizers
     - field.field.node.event.field_programme
@@ -13,6 +17,7 @@ dependencies:
     - field.field.node.event.field_text
     - node.type.event
   module:
+    - datetime
     - entity_reference_revisions
     - image
     - link
@@ -35,6 +40,23 @@ content:
     third_party_settings: {  }
     type: link
     region: content
+  field_audience:
+    weight: 111
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_date:
+    weight: 109
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
   field_faq:
     type: entity_reference_revisions_entity_view
     weight: 105
@@ -44,6 +66,14 @@ content:
       link: ''
     third_party_settings: {  }
     region: content
+  field_goal:
+    weight: 110
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_image:
     weight: 101
     label: above
@@ -52,6 +82,14 @@ content:
       image_link: ''
     third_party_settings: {  }
     type: image
+    region: content
+  field_language:
+    weight: 112
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
     region: content
   field_location:
     weight: 103

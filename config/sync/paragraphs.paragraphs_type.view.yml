@@ -1,0 +1,7 @@
+uuid: e379802a-9adb-4d93-b1f9-884829ddb842
+langcode: en
+status: true
+dependencies: {  }
+id: view
+label: View
+behavior_plugins: {  }

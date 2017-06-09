@@ -4,8 +4,12 @@ status: true
 dependencies:
   config:
     - field.field.node.event.field_action_links
+    - field.field.node.event.field_audience
+    - field.field.node.event.field_date
     - field.field.node.event.field_faq
+    - field.field.node.event.field_goal
     - field.field.node.event.field_image
+    - field.field.node.event.field_language
     - field.field.node.event.field_location
     - field.field.node.event.field_organizers
     - field.field.node.event.field_programme
@@ -14,6 +18,7 @@ dependencies:
     - image.style.thumbnail
     - node.type.event
   module:
+    - datetime
     - image
     - link
     - paragraphs
@@ -38,6 +43,21 @@ content:
     third_party_settings: {  }
     type: link_default
     region: content
+  field_audience:
+    weight: 41
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_date:
+    weight: 39
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
   field_faq:
     type: entity_reference_paragraphs
     weight: 35
@@ -50,6 +70,14 @@ content:
       default_paragraph_type: ''
     third_party_settings: {  }
     region: content
+  field_goal:
+    weight: 40
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_image:
     weight: 31
     settings:
@@ -57,6 +85,15 @@ content:
       preview_image_style: thumbnail
     third_party_settings: {  }
     type: image_image
+    region: content
+  field_language:
+    weight: 42
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
     region: content
   field_location:
     weight: 33

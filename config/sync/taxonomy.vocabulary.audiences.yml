@@ -1,0 +1,9 @@
+uuid: cca8f66f-77c1-407e-8465-16961508d515
+langcode: en
+status: true
+dependencies: {  }
+name: Audiences
+vid: audiences
+description: 'What is the audence or required skill-level for the course'
+hierarchy: 0
+weight: 0

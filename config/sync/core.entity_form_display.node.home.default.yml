@@ -3,9 +3,11 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.home.field_content
     - field.field.node.home.field_hero
     - node.type.home
   module:
+    - entity_reference_revisions
     - paragraphs
     - path
 id: node.home.default
@@ -18,6 +20,15 @@ content:
     weight: 10
     settings: {  }
     third_party_settings: {  }
+    region: content
+  field_content:
+    weight: 32
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_autocomplete
     region: content
   field_hero:
     type: entity_reference_paragraphs

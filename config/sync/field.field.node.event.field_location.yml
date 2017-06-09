@@ -10,7 +10,7 @@ field_name: field_location
 entity_type: node
 bundle: event
 label: Location
-description: ''
+description: 'Location field with address info. This address is used for the google api to retrieve a map'
 required: false
 translatable: false
 default_value: {  }

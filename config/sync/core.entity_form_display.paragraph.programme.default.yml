@@ -8,7 +8,6 @@ dependencies:
     - field.field.paragraph.programme.field_title
     - paragraphs.paragraphs_type.programme
   module:
-    - datetime
     - text
 id: paragraph.programme.default
 targetEntityType: paragraph
@@ -24,10 +23,12 @@ content:
     type: text_textarea
     region: content
   field_time:
-    weight: 6
-    settings: {  }
+    weight: 9
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
-    type: datetime_default
+    type: string_textfield
     region: content
   field_title:
     weight: 7

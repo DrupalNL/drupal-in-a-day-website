@@ -1,0 +1,9 @@
+uuid: 15f56865-2fbe-448b-88d0-af575cf85ba0
+langcode: en
+status: true
+dependencies: {  }
+name: Languages
+vid: languages
+description: 'In what languages are the courses given / available'
+hierarchy: 0
+weight: 0

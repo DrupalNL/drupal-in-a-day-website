@@ -1,21 +1,19 @@
-uuid: 132a97fd-5731-4737-a609-cc2201d92362
+uuid: 8e459d9f-4f43-41a5-abb2-240ef1fa800c
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_time
     - paragraphs.paragraphs_type.programme
-  module:
-    - datetime
 id: paragraph.programme.field_time
 field_name: field_time
 entity_type: paragraph
 bundle: programme
 label: Time
-description: ''
-required: false
+description: "Text, you can enter start- and endtimes and more descriptive times. I.e.\r\n14:00 - 15:00\r\nMorning\r\nEvening\r\nect."
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: datetime
+field_type: string

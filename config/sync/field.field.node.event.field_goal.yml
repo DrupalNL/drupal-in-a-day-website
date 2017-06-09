@@ -1,0 +1,19 @@
+uuid: bb4f5c63-8e53-4ec3-b2f4-54658958df4c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_goal
+    - node.type.event
+id: node.event.field_goal
+field_name: field_goal
+entity_type: node
+bundle: event
+label: Goal
+description: 'What is the end goal of the course (i.e. "Build your first website" or "Program a Hello World module"'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

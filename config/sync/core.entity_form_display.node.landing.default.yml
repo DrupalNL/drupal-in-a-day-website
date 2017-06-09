@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.landing.field_content
+    - field.field.node.landing.field_subtitle
     - field.field.node.landing.field_teaser
     - node.type.landing
   module:
@@ -29,6 +30,14 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: entity_reference_revisions_autocomplete
+    region: content
+  field_subtitle:
+    weight: 33
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
     region: content
   field_teaser:
     type: entity_reference_paragraphs
