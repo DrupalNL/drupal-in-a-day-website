@@ -1,15 +1,15 @@
-uuid: 54e46c84-24b2-4d68-90b7-0052292bc2ec
+uuid: a006f2c8-3d91-4a64-ad5f-e7bbf2347c97
 langcode: en
 status: true
 dependencies:
   module:
     - user
   theme:
-    - bartik
+    - diad
 _core:
   default_config_hash: 4QlSnWBcxxKMIFRM8sbu_MjSkcp3NjGgnVrc-lynQHI
-id: bartik_login
-theme: bartik
+id: diad_login
+theme: diad
 region: content
 weight: -1
 provider: null

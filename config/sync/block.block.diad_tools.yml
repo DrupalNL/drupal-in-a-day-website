@@ -1,4 +1,4 @@
-uuid: 4494dd21-609c-4f21-934c-8c9bea0fc126
+uuid: 52d1f339-a1c5-4680-8fcb-0632a5a506b7
 langcode: en
 status: false
 dependencies:
@@ -7,12 +7,12 @@ dependencies:
   module:
     - system
   theme:
-    - bartik
+    - diad
 _core:
   default_config_hash: xCOijLdB1-UgXxQ9a0D1_pd8vxNEhfMnxXZc8jYhHjs
-id: bartik_tools
-theme: bartik
-region: header
+id: diad_tools
+theme: diad
+region: content
 weight: -1
 provider: null
 plugin: 'system_menu_block:tools'
