@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
-    - field.field.node.home.field_content
     - field.field.node.home.field_hero
     - node.type.home
   module:
@@ -18,5 +17,4 @@ content:
     weight: 100
     region: content
 hidden:
-  field_content: true
   field_hero: true

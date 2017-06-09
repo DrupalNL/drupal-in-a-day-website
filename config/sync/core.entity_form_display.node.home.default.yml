@@ -3,7 +3,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.home.field_content
     - field.field.node.home.field_hero
     - node.type.home
   module:
@@ -18,18 +17,6 @@ content:
     type: datetime_timestamp
     weight: 10
     settings: {  }
-    third_party_settings: {  }
-    region: content
-  field_content:
-    type: entity_reference_paragraphs
-    weight: 32
-    settings:
-      title: Paragraph
-      title_plural: Paragraphs
-      edit_mode: open
-      add_mode: dropdown
-      form_display_mode: default
-      default_paragraph_type: ''
     third_party_settings: {  }
     region: content
   field_hero:
