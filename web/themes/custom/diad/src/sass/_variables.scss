@@ -1,7 +1,5 @@
 // Variables
 
-// Gray and Brand Colors for use across theme
-
 $theme-primary:    #fed136;
 $theme-danger:     #e74c3c;
 
@@ -17,3 +15,10 @@ $gray-dark:		   lighten($gray-base, 20%) !default;   // #333
 $gray:			   lighten($gray-base, 33.5%) !default; // #555
 $gray-light:	   lighten($gray-base, 46.7%) !default; // #777
 $gray-lighter:	   lighten($gray-base, 93.5%) !default; // #eee
+
+// Font declarations
+$font-default: 'Avenir LT W01_55 Roman1475520', sans-serif;
+$font-light: 'Avenir LT W01_35 Light_1475502', sans-serif;
+$font-book: 'Avenir LT W01_45 Book1475508', sans-serif;
+$font-medium: 'Avenir LT W01_65 Medium1475532', sans-serif;
+$font-heavy: 'Avenir LT W01_85 Heavy1475544', sans-serif;
