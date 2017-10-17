@@ -8,6 +8,7 @@ screenshot: diad.png
 libraries:
   - diad/global-styling
   - diad/fonts-com
+  - diad/bootstrap4
 
 base theme: stable
 
