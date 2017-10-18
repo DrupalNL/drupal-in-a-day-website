@@ -22,3 +22,9 @@ bootstrap4:
     //maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js: { type: external, minified: true }
   dependencies:
     - core/jquery
+
+fontawesome:
+  version: 4.7.0
+  css:
+    theme:
+      //maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css: { type: external, minified: true }
