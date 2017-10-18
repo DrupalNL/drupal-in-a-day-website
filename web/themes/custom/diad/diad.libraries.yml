@@ -3,7 +3,10 @@ global-styling:
   css:
     theme:
       css/style.css: {}
-
+  js:
+    js/diad.js: {}
+  dependencies:
+    - core/jquery
 
 fonts-com:
   js:
