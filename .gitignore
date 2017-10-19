@@ -42,6 +42,10 @@ web/sites/*/services.yml
 web/sites/*/files
 web/sites/*/private
 
+# Ignore excluded configuration.
+config/excluded/*
+!config/excluded/.gitkeep
+
 # Ignore file type that contain large files (to avoid trouble). Optionally add or remove some extensions
 *.tar
 *.gz
