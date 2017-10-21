@@ -1,15 +1,15 @@
-uuid: 9813b785-fae1-41ef-8798-690a75e61616
+uuid: 7a1867cb-9bba-48cc-823d-95fa093e87ee
 langcode: en
 status: true
 dependencies:
   config:
-    - block_content.type.frontpage_hero_image
-    - field.field.block_content.frontpage_hero_image.body
+    - block_content.type.standard_block
+    - field.field.block_content.standard_block.body
   module:
     - text
-id: block_content.frontpage_hero_image.default
+id: block_content.standard_block.default
 targetEntityType: block_content
-bundle: frontpage_hero_image
+bundle: standard_block
 mode: default
 content:
   body:

@@ -1,0 +1,8 @@
+uuid: 13a0430b-e7de-4dd3-bd01-93d8fe318c4a
+langcode: en
+status: true
+dependencies: {  }
+id: standard_block
+label: 'Standard Block'
+revision: 0
+description: 'Standaard block zonder extra velden. '

@@ -1,16 +1,16 @@
-uuid: f44a523a-0194-4b9d-9915-22bc3c579693
+uuid: e2293849-0744-4e9a-b948-7fa62c3903a8
 langcode: en
 status: true
 dependencies:
   config:
-    - block_content.type.frontpage_hero_image
+    - block_content.type.standard_block
     - field.storage.block_content.body
   module:
     - text
-id: block_content.frontpage_hero_image.body
+id: block_content.standard_block.body
 field_name: body
 entity_type: block_content
-bundle: frontpage_hero_image
+bundle: standard_block
 label: Body
 description: ''
 required: false

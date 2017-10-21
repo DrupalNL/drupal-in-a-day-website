@@ -1,23 +1,23 @@
-uuid: fc4f6598-2d9f-40a5-80e7-acbb3ffa70dc
+uuid: aa183bb4-2294-44a3-804a-030074d77c9e
 langcode: en
 status: true
 dependencies:
   content:
-    - 'block_content:frontpage_hero_image:b5a2cc31-b73e-4c1c-b445-0e86d7c16f7c'
+    - 'block_content:standard_block:05358443-33c4-4078-aa50-43b7930a32f3'
   module:
     - block_content
     - system
   theme:
     - diad
-id: frontpageheroimage
+id: forntpageheroimage
 theme: diad
 region: hero_image
 weight: 0
 provider: null
-plugin: 'block_content:b5a2cc31-b73e-4c1c-b445-0e86d7c16f7c'
+plugin: 'block_content:05358443-33c4-4078-aa50-43b7930a32f3'
 settings:
-  id: 'block_content:b5a2cc31-b73e-4c1c-b445-0e86d7c16f7c'
-  label: 'Frontpage Hero Image '
+  id: 'block_content:05358443-33c4-4078-aa50-43b7930a32f3'
+  label: 'Forntpage Hero Image'
   provider: block_content
   label_display: '0'
   status: true
