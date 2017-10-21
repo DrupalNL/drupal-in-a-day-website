@@ -1,0 +1,31 @@
+uuid: fc4f6598-2d9f-40a5-80e7-acbb3ffa70dc
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:frontpage_hero_image:b5a2cc31-b73e-4c1c-b445-0e86d7c16f7c'
+  module:
+    - block_content
+    - system
+  theme:
+    - diad
+id: frontpageheroimage
+theme: diad
+region: hero_image
+weight: 0
+provider: null
+plugin: 'block_content:b5a2cc31-b73e-4c1c-b445-0e86d7c16f7c'
+settings:
+  id: 'block_content:b5a2cc31-b73e-4c1c-b445-0e86d7c16f7c'
+  label: 'Frontpage Hero Image '
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }

@@ -1,0 +1,22 @@
+uuid: 9813b785-fae1-41ef-8798-690a75e61616
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.frontpage_hero_image
+    - field.field.block_content.frontpage_hero_image.body
+  module:
+    - text
+id: block_content.frontpage_hero_image.default
+targetEntityType: block_content
+bundle: frontpage_hero_image
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden: {  }

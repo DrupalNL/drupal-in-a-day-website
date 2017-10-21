@@ -1,0 +1,22 @@
+uuid: f44a523a-0194-4b9d-9915-22bc3c579693
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.frontpage_hero_image
+    - field.storage.block_content.body
+  module:
+    - text
+id: block_content.frontpage_hero_image.body
+field_name: body
+entity_type: block_content
+bundle: frontpage_hero_image
+label: Body
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+field_type: text_with_summary

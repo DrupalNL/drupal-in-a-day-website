@@ -1,0 +1,8 @@
+uuid: 50aa6ff2-6585-4788-8146-e542fc89af68
+langcode: en
+status: true
+dependencies: {  }
+name: 'Full HTML'
+format: full_html
+weight: 0
+filters: {  }
