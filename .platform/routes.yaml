@@ -5,7 +5,7 @@
 
 "http://{default}/":
     type: upstream
-    upstream: "app:http"
+    upstream: "php:php"
     cache:
       enabled: true
 
