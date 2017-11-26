@@ -1,49 +1,79 @@
+<!-- Navigation -->
+<div class="navbar navbar-expand-lg fixed-top navbar-dark" id="mainNav">
+  <div class="container">
+    {{ page.header }}
+    {{ page.primary_menu }}
+  </div>
+</div>
 
+{{ page.hero_image }}
+{{ page.secondary_menu }}
 
-    <!-- Navigation -->
-    <div class="navbar navbar-expand-lg fixed-top navbar-dark" id="mainNav">
-        <div class="container">
-          {{ page.header }}
-          {{ page.primary_menu }}
-        </div>
+{{ page.breadcrumb }}
+
+{{ page.highlighted }}
+
+{{ page.help }}
+
+<main role="main">
+  <a id="main-content" tabindex="-1"></a>
+  {# link is in html.html.twig #}
+
+  <div class="layout-content">
+    {{ page.content }}
+  </div>
+  {# /.layout-content #}
+
+  {% if page.sidebar_first %}
+    <aside class="layout-sidebar-first" role="complementary">
+      {{ page.sidebar_first }}
+    </aside>
+  {% endif %}
+
+  {% if page.sidebar_second %}
+    <aside class="layout-sidebar-second" role="complementary">
+      {{ page.sidebar_second }}
+    </aside>
+  {% endif %}
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <span class="copyright">Copyright &copy; Drupal-In-A-Day 2017</span>
+      </div>
+      <div class="col-md-4">
+        <ul class="list-inline social-buttons">
+          <li class="list-inline-item">
+            <a href="#">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a href="#">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a href="#">
+              <i class="fa fa-linkedin"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <ul class="list-inline quicklinks">
+          <li class="list-inline-item">
+            <a href="#">Privacy Policy</a>
+          </li>
+          <li class="list-inline-item">
+            <a href="#">Terms of Use</a>
+          </li>
+        </ul>
+      </div>
     </div>
-
-    {{page.hero_image}}
-
-
-
-
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <span class="copyright">Copyright &copy; Drupal-In-A-Day 2017</span>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-inline social-buttons">
-                        <li class="list-inline-item">
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-inline quicklinks">
-                        <li class="list-inline-item">
-                            <a href="#">Privacy Policy</a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="#">Terms of Use</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
+  </div>
+</footer>

@@ -19,3 +19,9 @@ regions:
   header: Header
   primary_menu: Primary Menu
   hero_image: Hero Image
+  secondary_menu: Secondary Menu
+  highlighted: Highlighted
+  help: Help
+  sidebar_first: Sidebar First
+  sidebar_second: Sidebar Second
+  breadcrumb: Breadcrumb 
