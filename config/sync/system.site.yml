@@ -1,11 +1,11 @@
 uuid: ac625c53-1fb1-470b-89d7-99211f396fa0
 name: 'Drupal in a Day'
-mail: admin@example.com
+mail: info@drupal-in-a-day.nl
 slogan: ''
 page:
   403: ''
   404: ''
-  front: /user/login
+  front: /node/1
 admin_compact_mode: false
 weight_select_max: 100
 langcode: en

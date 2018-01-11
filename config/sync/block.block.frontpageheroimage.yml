@@ -9,7 +9,7 @@ dependencies:
     - system
   theme:
     - diad
-id: forntpageheroimage
+id: frontpageheroimage
 theme: diad
 region: hero_image
 weight: 0
@@ -17,7 +17,7 @@ provider: null
 plugin: 'block_content:05358443-33c4-4078-aa50-43b7930a32f3'
 settings:
   id: 'block_content:05358443-33c4-4078-aa50-43b7930a32f3'
-  label: 'Forntpage Hero Image'
+  label: 'Frontpage Hero Image'
   provider: block_content
   label_display: '0'
   status: true
